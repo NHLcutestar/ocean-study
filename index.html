@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>藍海奧秘：現代互動海洋學探索與教學平台</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            deep: '#030a16',
+            surface: '#0a192f',
+            card: '#0f223d',
+            cyanGlow: '#00f2fe',
+            tealGlow: '#64ffda',
+            coralPink: '#ff7675'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#030a16] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+
+  <!-- Top Hero Header with Animated Wave -->
+  <header class="ocean-hero pt-8 pb-14 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+      <div class="flex items-center gap-4">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/30 border border-cyan-300/30">
+          <svg class="w-8 h-8 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="badge badge-cyan">Oceanography Interactive Lab</span>
+            <span class="text-xs text-slate-400">高等海洋學課程教材</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white mt-1">
+            藍海奧秘：現代互動海洋學探索平台
+          </h1>
+          <p class="text-slate-300 text-sm mt-1">
+            五大核心模組 × 六大多維度物理模擬實驗室 × 實戰知識評量
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Action Controls -->
+      <div class="flex items-center gap-3">
+        <button id="fullscreen-toggle-btn" class="glass-card flex items-center gap-2 text-xs py-2 px-3 hover:text-cyan-300 transition-colors">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+          </svg>
+          <span>講義投影模式</span>
+        </button>
+        <button data-jump-tab="simulations" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 font-bold text-xs shadow-md shadow-cyan-500/30 hover:scale-105 transition-all">
+          ⚡ 進入模擬實驗室
+        </button>
+      </div>
+    </div>
+
+    <!-- Background Wave Shapes -->
+    <div class="wave-layer"></div>
+    <div class="wave-layer w2"></div>
+  </header>
+
+  <!-- Navigation Bar (Sticky) -->
+  <nav class="sticky top-0 z-40 bg-[#061426]/90 backdrop-blur-md border-b border-cyan-500/20 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between py-3 overflow-x-auto no-scrollbar gap-2">
+        <div class="flex items-center gap-2">
+          <button data-tab-target="overview" class="nav-tab-btn active">
+            🧭 總覽導讀
+          </button>
+          <button data-tab-target="topic1" class="nav-tab-btn">
+            💧 主題一：海水物化性質
+          </button>
+          <button data-tab-target="topic2" class="nav-tab-btn">
+            🌀 主題二：海洋動力學
+          </button>
+          <button data-tab-target="topic3" class="nav-tab-btn">
+            🌊 主題三：波動與潮汐
+          </button>
+          <button data-tab-target="topic4" class="nav-tab-btn">
+            🏝️ 主題四：台灣區域海洋學
+          </button>
+          <button data-tab-target="topic5" class="nav-tab-btn">
+            🛰️ 主題五：海洋觀測儀器
+          </button>
+          <button data-tab-target="simulations" class="nav-tab-btn text-cyan-300 font-semibold">
+            🧪 互動實驗室 (6合1)
+          </button>
+          <button data-tab-target="quiz" class="nav-tab-btn text-amber-300">
+            🎯 闖關測驗
+          </button>
+          <button data-tab-target="glossary" class="nav-tab-btn">
+            📖 名詞辭典
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- ================================================================= -->
+    <!-- TAB: OVERVIEW (導讀與全景概覽) -->
+    <!-- ================================================================= -->
+    <section id="tab-overview" class="tab-content-panel space-y-8">
+      <!-- Welcome Hero Banner -->
+      <div class="glass-panel p-6 sm:p-8 relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl">
+          <span class="badge badge-cyan mb-3">歡迎進入海洋科學殿堂</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+            探索覆蓋地球 71% 的蔚藍世界
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+            本平台依據海洋學核心講義精編而成，涵蓋<strong>海水物理與化學參數</strong>、<strong>大洋風生與熱鹽動力學</strong>、<strong>深淺水波與日地月潮汐</strong>、<strong>台灣海域構造與海流</strong>、以及<strong>尖端海洋遙測與深海探測儀器</strong>。透過可互動調節的物理仿真引擎與即時數據換算，讓原本抽象的海洋學原理在指尖直觀呈現。
+          </p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="glass-card text-center">
+              <div class="text-2xl font-extrabold text-cyan-400">5 大</div>
+              <div class="text-xs text-slate-400 mt-1">核心理論專題</div>
+            </div>
+            <div class="glass-card text-center">
+              <div class="text-2xl font-extrabold text-teal-400">6 座</div>
+              <div class="text-xs text-slate-400 mt-1">互動物理模擬器</div>
+            </div>
+            <div class="glass-card text-center">
+              <div class="text-2xl font-extrabold text-amber-400">15 道</div>
+              <div class="text-xs text-slate-400 mt-1">實戰考點評量</div>
+            </div>
+            <div class="glass-card text-center">
+              <div class="text-2xl font-extrabold text-rose-400">160+ 頁</div>
+              <div class="text-xs text-slate-400 mt-1">PDF講義重點精華</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Module Navigation Cards -->
+      <h3 class="text-xl font-bold text-white flex items-center gap-2">
+        <span>📚 五大海洋學核心模組</span>
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Card 1 -->
+        <div class="glass-panel p-6 flex flex-col justify-between hover:border-cyan-400/50 transition-all cursor-pointer" data-jump-tab="topic1">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-3xl">💧</span>
+              <span class="badge badge-cyan">主題一</span>
+            </div>
+            <h4 class="text-lg font-bold text-white mb-2">海水物理與化學性質</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              水的熱力特異性、鹽度與 PSU 演進、Knudsen 經驗公式、恆定組成定律（Marcet 原理）、24.7‰ 冰點最大密度臨界、溫鹽圖 (T-S Diagram) 與混和增密 (Cabbeling)、SOFAR 聲學波導及海洋酸化反應。
+            </p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-700/60 text-xs text-cyan-300 font-semibold">
+            <span>含：溫鹽增密模擬 & 離子計算機</span>
+            <span>進入學習 →</span>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="glass-panel p-6 flex flex-col justify-between hover:border-cyan-400/50 transition-all cursor-pointer" data-jump-tab="topic2">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-3xl">🌀</span>
+              <span class="badge badge-cyan">主題二</span>
+            </div>
+            <h4 class="text-lg font-bold text-white mb-2">海洋動力學與環流</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              埃克曼螺旋與淨傳輸（偏轉 90°）、沿岸湧升流（大洋施肥機）、太平洋垃圾帶機制、地轉流平衡、百年之謎「西方強化」與斯托梅爾渦度煞車模型、深海溫鹽環流 (THC/AMOC)。
+            </p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-700/60 text-xs text-cyan-300 font-semibold">
+            <span>含：埃克曼與湧升流動態沙盒</span>
+            <span>進入學習 →</span>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="glass-panel p-6 flex flex-col justify-between hover:border-cyan-400/50 transition-all cursor-pointer" data-jump-tab="topic3">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-3xl">🌊</span>
+              <span class="badge badge-cyan">主題三</span>
+            </div>
+            <h4 class="text-lg font-bold text-white mb-2">波動學與潮汐理論</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              波浪幾何要素、深水波 (h>L/2) vs 淺水波 (h<L/20)、頻散與碎波極限 (H/L=1/7)、海嘯大洋淺水波物理機制、引潮力推導（與距離三次方成反比）、大潮小潮幾何與無潮點旋轉潮波。
+            </p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-700/60 text-xs text-cyan-300 font-semibold">
+            <span>含：波浪粒子軌道 & 潮汐模擬器</span>
+            <span>進入學習 →</span>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="glass-panel p-6 flex flex-col justify-between hover:border-cyan-400/50 transition-all cursor-pointer" data-jump-tab="topic4">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-3xl">🏝️</span>
+              <span class="badge badge-cyan">主題四</span>
+            </div>
+            <h4 class="text-lg font-bold text-white mb-2">台灣區域海洋學</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              台灣周邊海盆地形對比（西部淺棚 vs 東部深海隱沒帶）、三大流系（黑潮主流、中國沿岸流、南海暖流季風翻轉）、高屏海底峽谷濁流災害、ENSO 聖嬰/反聖嬰海洋大氣耦合。
+            </p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-700/60 text-xs text-cyan-300 font-semibold">
+            <span>含：台灣海流季風切換剖面</span>
+            <span>進入學習 →</span>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="glass-panel p-6 flex flex-col justify-between hover:border-cyan-400/50 transition-all cursor-pointer" data-jump-tab="topic5">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-3xl">🛰️</span>
+              <span class="badge badge-cyan">主題五</span>
+            </div>
+            <h4 class="text-lg font-bold text-white mb-2">海洋觀測與儀器科技</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              水深量測科技進化（鉛錘 → 單/多音束 → 側掃聲納尋找黑盒子）、CTD 與採水輪盤各探針原理、測流黑科技（拉格朗日 Argo 浮標 vs 歐拉 ADCP 都卜勒剖面）、衛星遙測高度計與海色衛星。
+            </p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-700/60 text-xs text-cyan-300 font-semibold">
+            <span>含：深海聲道射線追蹤模擬</span>
+            <span>進入學習 →</span>
+          </div>
+        </div>
+
+        <!-- Interactive Sandbox Launch Card -->
+        <div class="glass-panel p-6 flex flex-col justify-between bg-gradient-to-br from-cyan-900/40 via-blue-900/30 to-slate-900/60 border-cyan-400/40 hover:border-cyan-300 transition-all cursor-pointer" data-jump-tab="simulations">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-3xl">🧪</span>
+              <span class="badge badge-amber">Interactive Lab</span>
+            </div>
+            <h4 class="text-lg font-bold text-cyan-200 mb-2">六合一互動物理實驗室</h4>
+            <p class="text-slate-300 text-sm leading-relaxed mb-4">
+              無需安裝，直接在瀏覽器即時渲染運算：溫鹽混和增密 T-S 圖、海水離子換算、波浪質點橢圓軌道、SOFAR 聲道司乃爾折射、日月引潮力潮隆、埃克曼湧升流。
+            </p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-cyan-500/30 text-xs text-cyan-300 font-bold">
+            <span>6 大物理模型即時 Canvas 渲染</span>
+            <span>立即操作 →</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB: TOPIC 1 (海水物理與化學性質) -->
+    <!-- ================================================================= -->
+    <section id="tab-topic1" class="tab-content-panel hidden space-y-8">
+      <div class="flex items-center justify-between border-b border-cyan-500/20 pb-4">
+        <div>
+          <span class="badge badge-cyan">主題一</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">海水物理與化學性質</h2>
+          <p class="text-slate-400 text-sm">水的熱特性、鹽度定義、恆定組成定律、密度異常與混和增密、SOFAR 通道與海洋酸化</p>
+        </div>
+        <button data-jump-tab="simulations" data-jump-lab="ts-diagram" class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs hover:bg-cyan-500/20">
+          <span>🧪 開啟 T-S 增密實驗室</span>
+        </button>
+      </div>
+
+      <!-- Section 1: 水的物理特性對氣候的作用 -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>1. 水的三大熱特性對地球氣候的關鍵作用</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="glass-card">
+            <div class="text-amber-400 font-bold text-base mb-2">① 比熱極高 (High Specific Heat)</div>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              海水能儲存並搬運極為龐大的熱量。透過洋流（如黑潮、墨西哥灣流）將低緯度過剩熱能輸送至高緯度寒冷海域，極大縮小了地球兩極與赤道的溫差，是全球氣候最重要的「熱調節器」。
+            </p>
+          </div>
+          <div class="glass-card">
+            <div class="text-cyan-400 font-bold text-base mb-2">② 融解熱極高 (High Latent Heat of Fusion)</div>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              水在結冰或融冰時吸收/釋放大量熱量。在極地海域，海面海冰覆蓋時能使冰層下方的海水水溫維持在冰點附近，提供隔熱保護與強大緩衝作用，防止底層海洋完全凍結。
+            </p>
+          </div>
+          <div class="glass-card">
+            <div class="text-teal-400 font-bold text-base mb-2">③ 蒸發潛熱極高 (High Latent Heat of Evaporation)</div>
+            <p class="text-slate-300 text-sm leading-relaxed">
+              水分子蒸發需吸收極大熱量。海面水分蒸發將海表熱能以水氣形式帶入大氣層，在大氣冷凝成雲致雨時釋放潛熱，直接驅動颱風、颶風及熱帶對流系統。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: 純水 vs 海水性質差異 & 24.7‰ 臨界奧秘 -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>2. 純水 vs 海水：關鍵臨界鹽度 24.7‰ 的物理奇蹟</span>
+        </h3>
+        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+          純水的物理性質僅由溫度 (T) 與壓力 (P) 決定；而真實海水溶有鹽分，其性質是<strong>壓力 (P)、溫度 (T) 與鹽度 (S)</strong> 三者的函數。溶解鹽分對純水原有特性造成修正，尤其是<strong>冰點</strong>與<strong>最大密度溫度</strong>的變化。
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="glass-card">
+            <h4 class="text-base font-bold text-amber-300 mb-2">❄️ 淡水湖泊 vs 極地大洋對流機制對比</h4>
+            <div class="space-y-3 text-sm text-slate-300">
+              <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50">
+                <div class="font-bold text-sky-300 mb-1">【現象一：淡水湖冬季逆溫分層（S < 24.7‰，約 0‰）】</div>
+                <p>純水降溫到 <strong>4°C 時密度達到最大</strong>。表層冷卻至 4°C 水下沉到底部；當湖面繼續冷卻至 3°C、2°C、0°C 時，水反而「變輕」停留在表面並結冰。結果：湖面是冰，湖底卻始終維持約 4°C，魚類得以存活！</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-700/50">
+                <div class="font-bold text-teal-300 mb-1">【現象二：極地海水深層水下沉（S > 24.7‰，大洋約 35‰）】</div>
+                <p>當鹽度超過 24.7‰ 時，<strong>最大密度溫度已低於冰點（約 -1.9°C）</strong>！這意味著一般海水<strong>越冷就越重，直到結冰前都持續增加密度而下沉</strong>！極地海冰形成時還會「排鹵（Brine Rejection）」，排出高濃度的冰冷鹽水，下沉形成全大洋最重的「南極底層水 (AABW)」。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card flex flex-col justify-between">
+            <h4 class="text-base font-bold text-cyan-300 mb-2">📊 鹽度與最大密度/冰點溫度數值表</h4>
+            <table class="ocean-table">
+              <thead>
+                <tr>
+                  <th>鹽度 (S)</th>
+                  <th>最大密度溫度 (T_max)</th>
+                  <th>冰點 (Freezing Pt)</th>
+                  <th>冷卻對流行為</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="font-bold text-sky-300">0‰ (純水)</td>
+                  <td>+3.98°C</td>
+                  <td>0.00°C</td>
+                  <td>4°C 時沉底，4°C~0°C 浮於表層結冰</td>
+                </tr>
+                <tr>
+                  <td class="font-bold text-amber-300">24.7‰</td>
+                  <td>-1.332°C</td>
+                  <td>-1.332°C</td>
+                  <td class="text-amber-200">最大密度點與冰點重合（物理分水嶺）</td>
+                </tr>
+                <tr>
+                  <td class="font-bold text-cyan-300">35‰ (標準海水)</td>
+                  <td>-3.52°C (理論)</td>
+                  <td>-1.91°C</td>
+                  <td class="text-cyan-200 font-semibold">越冷越重直到結冰，持續沉底驅動深海環流</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="mt-4 p-3 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-xs text-slate-300">
+              💡 <strong>死亡冰柱 (Brinicle) 奇觀：</strong>極地海面結冰時，純水結成晶體，將極濃、低於 0°C 的鹵水排出下沉，入海瞬間將周圍海水凍結成空心中空冰管，一路延伸至海床凍結海星海膽！
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: 鹽度定義、Knudsen 公式與恆定組成定律 -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>3. 恆定組成定律 (Marcet 原理) 與 Knudsen 經驗公式</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <div class="callout mb-4">
+              <div class="font-bold text-cyan-200 text-base mb-1">【常數比例定律 (Principle of Constant Proportions)】</div>
+              <div class="text-sm text-slate-200">
+                <strong>「總量會變，但比例不變」</strong>：雖然世界各海域因蒸發、降水、融冰或河川注入量不同導致「總鹽度」有差異（如紅海達 40‰、波羅的海低至 10‰），但海水中主要鹽分離子之間的<strong>相對濃度比例，始終保持恆定</strong>！
+              </div>
+            </div>
+            <div class="text-sm text-slate-300 space-y-2">
+              <p><strong>為何比例固定？</strong></p>
+              <ul class="list-disc list-inside space-y-1 text-slate-400">
+                <li>地球大洋已存在數十億年，洋流、熱鹽環流與風浪長期攪拌使海水充分混合。</li>
+                <li>大洋全域循環混合一次約需 <strong>1,000 年</strong>，而主要離子在海中的「滯留時間 (Residence Time)」長達數百萬至數千萬年，遠大於混合時間！</li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="glass-card mb-4">
+              <div class="text-xs uppercase text-slate-400 font-bold tracking-wider mb-1">Knudsen 經驗公式</div>
+              <div class="math-box text-cyan-300 text-lg">
+                鹽度 (S) = 1.80655 × 氯度 (Cl)
+              </div>
+              <p class="text-xs text-slate-400 text-center mt-1">
+                已知總鹽度 S 即可推求氯度 Cl，再藉由各離子固定的 g/Cl 比值算出各離子精確含量。
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/70 border border-slate-700/60 text-xs space-y-2">
+              <div class="font-bold text-amber-300 text-sm">講義兩大經典情境演練：</div>
+              <div class="text-slate-300">
+                <strong>情境 1：</strong>已知 Cl = 19.3530 g/kg，求 Na⁺ 質量濃度？<br>
+                查表 Na⁺ 的 g/Cl 比值 = 0.5565 → <span class="font-mono text-cyan-300">19.3530 × 0.5565 = 10.7699 g/kg</span>
+              </div>
+              <div class="text-slate-300 pt-2 border-t border-slate-800">
+                <strong>情境 2：</strong>某低鹽海域鹽度 S = 30，求 Mg²⁺ 濃度？<br>
+                S=35 時表中 Mg²⁺ = 1.2837 g/kg → <span class="font-mono text-cyan-300">1.2837 × (30 / 35) = 1.1003 g/kg</span>
+              </div>
+              <div class="pt-2 text-right">
+                <button data-jump-tab="simulations" data-jump-lab="ion-calc" class="text-cyan-400 font-bold hover:underline">
+                  打開離子計算機進行任意換算 →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: 溫鹽圖與混和增密 (Cabbeling) & 垂直躍層 -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>4. 溫鹽圖 (T-S Diagram) 與混和增密現象 (Cabbeling)</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div class="space-y-4 text-sm text-slate-300 leading-relaxed">
+            <p>
+              海洋學家透過 <strong>T-S 圖（橫軸鹽度 S、縱軸溫度 T）</strong> 判讀水團（Water Mass）與等密度線（Isopycnals, $\sigma_t$）。在源頭水域，水團溫鹽聚集在單一點；離開源地與四周混合時，溫鹽點在 T-S 圖上延伸成一條混合線。
+            </p>
+            <div class="callout callout-amber">
+              <div class="font-bold text-amber-300 mb-1">混和增密 (Cabbeling) 機制：</div>
+              由於海水狀態方程式具備非線性（等密度線呈現向左上方彎曲的弧形），當兩個<strong>密度完全相同、但溫鹽不同</strong>的水塊（例如 A: 低溫淡水、B: 高溫鹹水）按 1:1 混合時，其混合點 C 必定落在直線中點上。這導致混合後水體的密度 $\sigma_t$ <strong>大於原本兩種水體的密度</strong>，促使混合水體下沉！
+            </div>
+            <p class="text-xs text-slate-400">
+              海洋垂直分層：混合層（風吹均勻）、溫躍層 (Thermocline)、鹽躍層 (Halocline)、密度躍層 (Pycnocline)。在低緯赤道溫躍層極深強烈；中緯度具季節性溫躍層；高緯度則無顯著溫躍層。
+            </p>
+          </div>
+          <div class="glass-card flex flex-col items-center justify-center p-6 text-center">
+            <div class="w-full h-48 bg-slate-950 rounded-xl border border-cyan-500/20 p-4 flex flex-col justify-center items-center">
+              <span class="text-4xl mb-2">📈</span>
+              <div class="font-bold text-white text-sm mb-1">T-S 混和增密即時繪圖模擬</div>
+              <p class="text-slate-400 text-xs max-w-sm mb-3">
+                動態調節 A、B 兩水塊的溫度與鹽度，直觀看見等密度線彎曲及中點 C 增密下沉效應。
+              </p>
+              <button data-jump-tab="simulations" data-jump-lab="ts-diagram" class="px-4 py-2 rounded-lg bg-cyan-500 text-slate-950 text-xs font-bold shadow-md shadow-cyan-500/20">
+                立即啟動 T-S 模擬器
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 5: SOFAR 深海聲學通道 & 海洋酸化 -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>5. 深海聲學波導 SOFAR 通道與碳酸鹽酸化反應</span>
+        </h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- SOFAR -->
+          <div class="glass-card">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-bold text-cyan-300">🔊 SOFAR 深海聲學通道 (Deep Sound Channel)</h4>
+              <span class="badge badge-cyan">約 800~1000m</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+              水中聲速受三變數控制：<strong>溫度越高、鹽度越高、壓力越大，聲速越快！</strong>
+            </p>
+            <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside mb-3">
+              <li><strong>0 ~ 1000m (溫躍層)：</strong>水溫急降佔絕對主導，聲速隨深度加深而劇減。</li>
+              <li><strong>> 1000m (深層海域)：</strong>水溫接近低溫常數，靜水壓增加佔主導，聲速重新上升。</li>
+              <li><strong>SOFAR 軸心：</strong>出現聲速極小值層。依據司乃爾定律，偏離的聲線會不斷被上下高聲速層彎折回軸心，形成自聚焦全反射波導管，低頻聲音可傳遞數千公里！</li>
+              <li><strong>潛艇應用：</strong>軍事潛艇常藏身於表層「聲學陰影區 (Shadow Zone)」，讓水面軍艦的主動聲納無法偵測。</li>
+            </ul>
+            <button data-jump-tab="simulations" data-jump-lab="sofar" class="text-xs text-cyan-400 font-semibold hover:underline">
+              模擬司乃爾聲波射線折射路徑 →
+            </button>
+          </div>
+
+          <!-- Ocean Acidification -->
+          <div class="glass-card">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-bold text-coralPink">🧪 碳酸鹽系統與海洋酸化 (Ocean Acidification)</h4>
+              <span class="badge badge-coral">生態危機</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+              工業革命至今，表層海水平均 pH 由 <strong>8.2 降至 8.1</strong>。嚴格來說並非變為「酸性」，而是<strong>「弱鹼性更弱」</strong>。
+            </p>
+            <div class="p-2.5 rounded-lg bg-black/40 font-mono text-[11px] text-cyan-300 space-y-1 mb-3">
+              <div>CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻</div>
+              <div>H⁺ + CO₃²⁻ ⇌ HCO₃⁻ <span class="text-amber-300">(H⁺ 搶奪碳酸根)</span></div>
+              <div>Ca²⁺ + CO₃²⁻ → CaCO₃ <span class="text-rose-400">(造殼原料枯竭、既有外殼溶解)</span></div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              <strong>生態後果：</strong>游離 H⁺ 濃度增加，大量搶奪本用來形成珊瑚外骨骼與貝殼的碳酸根離子 (CO₃²⁻)，造成珊瑚白化、翼足類與貝類幼體無法形成硬殼甚至殼體溶解！
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB: TOPIC 2 (海洋動力學與環流) -->
+    <!-- ================================================================= -->
+    <section id="tab-topic2" class="tab-content-panel hidden space-y-8">
+      <div class="flex items-center justify-between border-b border-cyan-500/20 pb-4">
+        <div>
+          <span class="badge badge-cyan">主題二</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">海洋動力學（風吹流、地轉流與環流）</h2>
+          <p class="text-slate-400 text-sm">埃克曼動力學、沿岸湧升流、太平洋垃圾帶、地轉平衡、西方邊界強化與溫鹽環流</p>
+        </div>
+        <button data-jump-tab="simulations" data-jump-lab="ekman" class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs hover:bg-cyan-500/20">
+          <span>🧪 開啟埃克曼湧升流沙盒</span>
+        </button>
+      </div>
+
+      <!-- Ekman Dynamics & Upwelling -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>1. 埃克曼螺旋 (Ekman Spiral) 與埃克曼傳輸 (Ekman Transport)</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
+            <p>
+              <strong>北極探險的百年怪事：</strong>1893 年挪威探險家南森 (Nansen) 駕駛前進號被凍在北極冰層中，驚訝發現冰山飄流方向並非順風而行，而是永遠<strong>偏向風向右側 20°~40°</strong>！
+            </p>
+            <p>
+              物理學家埃克曼 (V. W. Ekman) 求解風應力、流體摩擦力與科氏力平衡：
+            </p>
+            <ul class="list-disc list-inside space-y-1.5 text-slate-300">
+              <li><strong>海面最表層：</strong>流向偏向風向<strong>右方 45°</strong>（北半球向右，南半球向左）。</li>
+              <li><strong>隨深度加深：</strong>動量逐層傳遞，流速逐漸減小，方向繼續向右偏轉，呈現優美的立體「埃克曼螺旋」。</li>
+              <li><strong>整層海水淨位移 (Ekman Transport)：</strong>對整層積分後的質量淨輸送方向，恰好垂直於風向，偏向<strong>風向右側 90°</strong>（南半球偏左 90°）！</li>
+            </ul>
+          </div>
+
+          <div class="glass-card">
+            <h4 class="text-base font-bold text-teal-300 mb-2">🐟 沿岸湧升流：大洋的「超級施肥機」</h4>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+              以北美加州外海（北半球）為例，夏季常年吹向南方的北風。依據「北半球向右 90°」定律，表層海水全被推向遠方的太平洋外海（離岸輸送）。
+            </p>
+            <div class="p-3 rounded-lg bg-teal-950/40 border border-teal-500/30 text-xs text-teal-200 mb-3">
+              <strong>補位效應：</strong>海岸邊海水被抽走，下層數百公尺深極度冰冷且富含氮、磷、矽無機鹽的深層海水被迫沿著斜坡往上衝（湧升流 Upwelling），浮游矽藻瞬間爆炸性繁殖，引來數以億計的沙丁魚與海鳥，形成世界頂級漁場！
+            </div>
+            <p class="text-xs text-slate-400">
+              <strong>舊金山夏天的濃霧：</strong>湧升流使加州沿岸水溫降至 10°C 左右，太平洋溫暖濕潤空氣碰到這道「天然冷氣機」立刻冷凝成壯觀的海霧。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Western Boundary Intensification & Stommel Model -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>2. 大洋西方強化 (Western Boundary Intensification)：黑潮又窄又急之謎</span>
+        </h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
+            <div class="p-3 rounded-lg bg-slate-900/70 border border-slate-700">
+              <span class="text-amber-400 font-bold">世紀大謎題：</span>全球洋流圖中，大洋西側的<strong>「黑潮」</strong>與<strong>「墨西哥灣流」</strong>寬度僅約 100 公里，流速高達驚人的每秒 2 公尺（高速公路）；但大洋東側的「加利福尼亞洋流」與「加那利洋流」寬度超過 1000 公里，流速僅每秒 0.1~0.2 公尺，慢如牛步！
+            </div>
+            <p>
+              <strong>斯托梅爾 (Henry Stommel 1948) 渦度煞車理論：</strong>
+            </p>
+            <ol class="list-decimal list-inside space-y-1.5 text-xs text-slate-300">
+              <li>北邊西風向東推、南邊信風向西推，風如同兩隻手不斷把大洋「像陀螺一樣往順時針方向猛轉」（注入順時針渦度矩）。</li>
+              <li>穩定的海洋不能無限加速，必須有一股<strong>逆時針摩擦力矩</strong>來煞車！</li>
+              <li>因地球為球體，$f = 2\Omega\sin\phi$ 隨緯度增加（$\beta$ 效應），大洋內部產生廣泛的向南輸送。</li>
+              <li>若洋流在<strong>東岸北上</strong>，山壁在右邊，摩擦力拉扯車子右側會產生<strong>順時針力矩（加速失控）</strong>；唯有強流在<strong>西岸北上</strong>，山壁在左邊，摩擦力才能產生<strong>逆時針煞車力矩</strong>！</li>
+            </ol>
+          </div>
+
+          <div class="glass-card flex flex-col justify-between">
+            <div>
+              <h4 class="text-base font-bold text-cyan-300 mb-2">🌀 西邊界流蛇行 (Meandering) 與冷/暖水環 (Eddies)</h4>
+              <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                黑潮與墨西哥灣流北上時常發生劇烈蛇行。當彎曲振幅過大時會脫離主流截斷：
+              </p>
+              <div class="space-y-2 text-xs">
+                <div class="p-2.5 rounded-lg bg-blue-950/40 border border-blue-500/30 text-blue-200">
+                  <strong>反鐘向冷水環 (Cold Ring)：</strong>近岸冷水被捲入外海暖水域，中心凹陷、逆時針旋轉。
+                </div>
+                <div class="p-2.5 rounded-lg bg-rose-950/40 border border-rose-500/30 text-rose-200">
+                  <strong>順鐘向暖水環 (Warm Ring)：</strong>外海暖水突入近岸冷水域，中心隆起、順時針旋轉。
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 p-3 rounded-lg bg-slate-900 border border-slate-700/60 text-xs text-slate-400">
+              🦆 <strong>1992 年黃色小鴨漂流記：</strong>貨輪翻覆近 3 萬隻塑膠小鴨落海，漂流軌跡歷經多年穿越北太平洋，完美驗證了副熱帶環流圈與馬緯度無風帶垃圾聚集渦旋！
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thermohaline Circulation (THC / AMOC) -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>3. 全球溫鹽輸送帶 (THC) 與大西洋經向翻轉環流 (AMOC)</span>
+        </h3>
+        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+          溫鹽環流是由海水<strong>溫度（Thermo）與鹽度（Haline）造成的密度差</strong>所驅動的深海循環。墨西哥灣流帶來高溫高鹽水，在格陵蘭海域受強烈冷風冷卻沉入深海形成<strong>北大西洋深層水 (NADW)</strong>；在南極威德爾海，結冰排鹵產生全大洋最冷最重的<strong>南極底層水 (AABW)</strong>。兩大深海霸主水團沉入海底，經由南大洋循環至印度洋與太平洋緩慢上升，完成全球約 1000 年的大循環。
+        </p>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB: TOPIC 3 (波動學與潮汐理論) -->
+    <!-- ================================================================= -->
+    <section id="tab-topic3" class="tab-content-panel hidden space-y-8">
+      <div class="flex items-center justify-between border-b border-cyan-500/20 pb-4">
+        <div>
+          <span class="badge badge-cyan">主題三</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">波動學與潮汐理論</h2>
+          <p class="text-slate-400 text-sm">波浪幾何、深水波與淺水波判別、波陡度碎波極限、海嘯物理、引潮力推導與無潮點系統</p>
+        </div>
+        <button data-jump-tab="simulations" data-jump-lab="wave-orbits" class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs hover:bg-cyan-500/20">
+          <span>🧪 開啟波浪軌道模擬器</span>
+        </button>
+      </div>
+
+      <!-- Wave Physics & Deep vs Shallow -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>1. 深水波 (Deep Wave) vs 淺水波 (Shallow Wave) 嚴格判定</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="glass-card">
+            <div class="text-cyan-400 font-bold text-base mb-2">🌊 深水波 (Deep Water Wave: h > L/2)</div>
+            <ul class="text-xs text-slate-300 space-y-2 list-disc list-inside">
+              <li><strong>水深判斷：</strong>水深 $h$ 大於半個波長 ($L/2$)。波浪感受不到海底摩擦。</li>
+              <li><strong>波速公式：</strong>$C = \sqrt{\frac{gL}{2\pi}} \approx 1.25\sqrt{L}$。<strong>波速只跟波長有關！</strong></li>
+              <li><strong>頻散現象 (Dispersion)：</strong>波長越長傳播越快。在起風區雜亂無章的風浪，傳播到千里之外後，長波長跑在最前頭，演化為規整圓滑的「湧浪 (Swell)」。</li>
+              <li><strong>質點軌道：</strong>表層呈純圓形軌道運動，隨深度呈指數衰減，在 $z = L/2$ 處軌道半徑衰減至幾近於零。</li>
+            </ul>
+          </div>
+
+          <div class="glass-card">
+            <div class="text-coralPink font-bold text-base mb-2">🏖️ 淺水波 (Shallow Water Wave: h < L/20)</div>
+            <ul class="text-xs text-slate-300 space-y-2 list-disc list-inside">
+              <li><strong>水深判斷：</strong>水深 $h$ 小於波長二十分之一 ($L/20$)。海底摩擦顯著。</li>
+              <li><strong>波速公式：</strong>$C = \sqrt{gh}$。<strong>波速只跟水深有關！</strong>水越淺，波速越慢。</li>
+              <li><strong>淺化效應 (Shoaling)：</strong>波浪靠近海岸水深變淺，波速減慢、波長被壓縮，能量集中促使波高劇烈激增！</li>
+              <li><strong>質點軌道：</strong>圓形被壓扁為水平長橢圓，在海底呈現純粹水平往復平移震盪。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-6 p-4 rounded-xl bg-slate-900/60 border border-slate-700 text-xs space-y-2">
+          <div class="font-bold text-amber-300">⚠️ 碎波極限 (Breaking Wave Limit)：</div>
+          <p class="text-slate-300">
+            當波高與波長的比值（波陡度 $H/L$）達到臨界值 <strong>$H/L \approx 1/7 \approx 0.143$</strong>（波峰夾角達 120°）時，波頂水質點向前運動速度超過波速，波浪失去幾何穩定性而崩潰碎裂（碎波）。
+          </p>
+        </div>
+      </div>
+
+      <!-- Tsunami Physics -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>2. 海嘯 (Tsunami)：為什麼在大洋深處也是「極淺水波」？</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
+            <p>
+              海嘯由海底強震、滑坡或火山爆發引起海床垂直錯動造成。其<strong>波長往往長達 100 ~ 500 公里</strong>！
+            </p>
+            <p>
+              即使在大洋平均深度 4,000 公尺處，$h/L = 4 / 200 = 0.02 < 1/20$。因此對海嘯而言，<strong>全世界所有海洋都是「極淺水」！</strong>
+            </p>
+            <p class="font-mono text-cyan-300">
+              大洋傳播速度：$C = \sqrt{gh} = \sqrt{9.81 \times 4000} \approx 200 \text{ m/s} \approx 720 \text{ km/h}$（相當於噴射客機速度！）。
+            </p>
+            <p class="text-xs text-slate-400">
+              海嘯在大洋中波高僅數十公分，船隻甚至毫無察覺；然而一旦撲向近岸淺海，水深銳減造成波速驟降，波長急劇壓縮，龐大動能轉化為高達數十公尺的滔天巨浪！
+            </p>
+          </div>
+          <div class="glass-card">
+            <h4 class="text-sm font-bold text-amber-300 mb-2">🚨 台灣中央氣象署海嘯預估波高分級</h4>
+            <div class="space-y-2 text-xs">
+              <div class="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-700">
+                <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span> 0 級（未達 0.3m）</span>
+                <span class="text-slate-400">無明顯感覺，微弱水位變動</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-700">
+                <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-yellow-400 inline-block"></span> 1 級（0.3m ~ 1m）</span>
+                <span class="text-yellow-300">明顯推力，低矮建築微侵水</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-700">
+                <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-orange-400 inline-block"></span> 2 級（1m ~ 3m）</span>
+                <span class="text-orange-300">嚴重威脅，船隻受衝擊翻覆</span>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-700">
+                <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span> 3 級（3m 以上）</span>
+                <span class="text-rose-400 font-bold">極度毀滅性海嘯，沿岸大規模淹沒</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tidal Theory & Celestial Mechanics -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>3. 平衡潮汐學：引潮力為什麼與「距離立方」成反比？</span>
+        </h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
+            <p>
+              海水漲退的潮汐並非單純由萬有引力決定，而是<strong>天體引力與地球繞地月質心公轉慣性離心力的「向量合力（差值）」</strong>，稱為<strong>引潮力 (Tidal Force)</strong>。
+            </p>
+            <div class="math-box text-cyan-300 text-sm">
+              |F_tidal| \approx m \frac{2 G M R_E}{R^3}
+            </div>
+            <p class="text-xs text-slate-400">
+              <strong>物理推導關鍵：</strong>引潮力是萬有引力隨空間位置變化的「微商（梯度）」，即 $\frac{d}{dR}(1/R^2) \propto 1/R^3$。因此引潮力與天體距離的<strong>三次方</strong>成反比！
+            </p>
+            <div class="p-3 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-xs text-cyan-200">
+              💡 <strong>月球引潮力 vs 太陽引潮力：</strong>太陽質量雖是月球的 2700 萬倍，但太陽距離地球比月球遠 390 倍！由於 $390^3 \approx 5.9 \times 10^7$，太陽的質量優勢完全被距離立方抹平，最終<strong>月球引潮力約為太陽的 2.17 倍</strong>！
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <h4 class="text-base font-bold text-amber-300 mb-2">🌓 大潮 (Spring Tide) vs 小潮 (Neap Tide)</h4>
+            <div class="space-y-2 text-xs text-slate-300 mb-4">
+              <p><strong>大潮（朔望潮）：</strong>在農曆初一（新月）與十五（滿月），太陽、地球、月球三者排列在一條直線上，太陽潮隆與太陰潮隆方向疊加，潮差達到全月最大！</p>
+              <p><strong>小潮（上/下弦潮）：</strong>在農曆初七、八與二十二、三，太陽與月球夾角為 90° 直角，兩者引潮力相互部分抵消，潮差為全月最小！</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900 border border-slate-700 text-xs text-slate-400">
+              <strong>無潮點 (Amphidromic Point)：</strong>潮波進入封閉或半封閉海盆（如北海、黃海）後，受科氏力影響圍繞中心點（無潮點）逆時針旋轉傳播。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB: TOPIC 4 (台灣區域海洋學與氣候變遷) -->
+    <!-- ================================================================= -->
+    <section id="tab-topic4" class="tab-content-panel hidden space-y-8">
+      <div class="flex items-center justify-between border-b border-cyan-500/20 pb-4">
+        <div>
+          <span class="badge badge-cyan">主題四</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">台灣區域海洋學與氣候變遷</h2>
+          <p class="text-slate-400 text-sm">台灣周邊流場季節轉換、黑潮主流、高屏海底峽谷濁流、ENSO 與氣候振盪</p>
+        </div>
+      </div>
+
+      <!-- Taiwan Currents -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>1. 台灣周邊三大流系與季風轉變流場</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="glass-card">
+            <div class="font-bold text-rose-400 text-sm mb-1">🌊 黑潮主流 (Kuroshio)</div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              四季皆強勁存在！源自赤道北太平洋西邊界流，沿著台灣東海岸陡峭陸坡向北奔馳，水質深黑清澈、高溫（>24°C）、高鹽（>34.5‰），流速可達 1.5~2 m/s。部分分支（黑潮支流）在冬季可穿過呂宋海峽進入台灣海峽或西南海域。
+            </p>
+          </div>
+          <div class="glass-card">
+            <div class="font-bold text-sky-400 text-sm mb-1">🌬️ 中國沿岸流 (Winter Coastal Current)</div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              <strong>冬季東北季風驅動：</strong>冷空氣南下推動長江與沿岸河口淡水向南流，特性為<strong>低溫（<15°C）、低鹽（<31‰）</strong>，沿著台灣海峽西側與澎湖水道南下，與黑潮暖水交匯形成強烈海洋鋒面與優良漁場。
+            </p>
+          </div>
+          <div class="glass-card">
+            <div class="font-bold text-emerald-400 text-sm mb-1">☀️ 南海暖流 (Summer South China Sea Current)</div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              <strong>夏季西南季風盛行：</strong>西南季風吹拂南海表層水向東北方推進，形成溫暖、鹽度中等的海流，自南向北穿過台灣海峽進入東海，大幅提高台灣西岸夏季水溫。
+            </p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700 text-xs text-slate-300 space-y-2">
+          <div class="font-bold text-amber-300 text-sm">🗺️ 台灣東西兩側地質與海床地形鮮明對比：</div>
+          <p>
+            <strong>西側（台灣海峽）：</strong>屬於廣闊平坦的大陸棚淺水區，平均水深僅約 60 公尺，沉積物主要由長江及台灣島內河川搬運堆積。
+          </p>
+          <p>
+            <strong>東側（太平洋）：</strong>位於歐亞板塊與菲律賓海板塊劇烈隱沒帶，海岸線外僅數公里水深即陡降至 2,000 ~ 6,000 公尺以上，緊鄰琉球海溝與馬尼拉海溝！
+          </p>
+        </div>
+      </div>
+
+      <!-- Kaoping Canyon & Turbidity Currents -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>2. 高屏海底峽谷 (Kaoping Canyon) 與海底濁流 (Turbidity Currents)</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
+            <p>
+              高屏海底峽谷自高屏溪口一路向西南深海延伸數百公里，深切陸棚與陸坡。
+            </p>
+            <p>
+              當台灣遭受強烈颱風（如莫拉克颱風）帶來極端暴雨時，高屏溪傾瀉海量泥沙；或當發生強烈地震時，引發海床沉積物失穩塌陷，形成高密度、高速奔流的<strong>海底泥石流——濁流 (Turbidity Currents)</strong>。
+            </p>
+            <div class="p-3 rounded-lg bg-rose-950/40 border border-rose-500/30 text-xs text-rose-200">
+              ⚡ <strong>2006 恆春地震與海底電纜浩劫：</strong>地震觸發高屏峽谷內大規模濁流，以高達每小時數十公里的速度沿峽谷沖刷而下，連續切斷多條途經該處的國際海底通訊光纜，導致整個東亞地區網絡通訊嚴重癱瘓！
+            </div>
+          </div>
+          <div class="glass-card">
+            <h4 class="text-sm font-bold text-cyan-300 mb-2">🌊 ENSO (聖嬰與反聖嬰) 大氣與海洋耦合</h4>
+            <div class="space-y-2 text-xs text-slate-300">
+              <p><strong>正常/反聖嬰年 (La Niña)：</strong>太平洋赤道信風強勁，表層暖水被推向西太平洋（印尼/台灣海域多雨），東太平洋（秘魯沿岸）強烈湧升低溫高營養鹽冷水，漁產極為豐富。</p>
+              <p><strong>聖嬰年 (El Niño)：</strong>東南信風減弱，沃克環流東移，原本堆積在西太平洋的暖水回流向東太平洋，秘魯沿海溫躍層加深、湧升流停止，表層水溫異常升高、葉綠素劇減，引起全球性氣候異常。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB: TOPIC 5 (海洋觀測儀器科技) -->
+    <!-- ================================================================= -->
+    <section id="tab-topic5" class="tab-content-panel hidden space-y-8">
+      <div class="flex items-center justify-between border-b border-cyan-500/20 pb-4">
+        <div>
+          <span class="badge badge-cyan">主題五</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">海洋觀測儀器與科技</h2>
+          <p class="text-slate-400 text-sm">水深測量演進、CTD 溫鹽深儀、ADCP 測流原理、Argo 浮標、衛星高度計與海色遙測</p>
+        </div>
+        <button data-jump-tab="simulations" data-jump-lab="sofar" class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs hover:bg-cyan-500/20">
+          <span>🧪 進入聲學探測模擬</span>
+        </button>
+      </div>
+
+      <!-- Bathymetry Evolution -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>1. 水深與海底地形量測科技的演進</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="glass-card">
+            <div class="text-slate-400 font-bold text-xs mb-1">第一代：原始測量</div>
+            <div class="text-white font-bold text-sm mb-2">垂繩鉛錘丈量法</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              以重鉛塊連繩索下沉。極易受海流推擠導致繩索彎曲無法鉛直，深海丈量誤差極大且耗時數小時。
+            </p>
+          </div>
+          <div class="glass-card">
+            <div class="text-sky-400 font-bold text-xs mb-1">第二代：單音束聲納</div>
+            <div class="text-white font-bold text-sm mb-2">單音束回聲探測法</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              向船底發射單道聲脈衝，依據 $Depth = \frac{1}{2} C \cdot \Delta t$ 測回波時間。只能記錄船隻走過的一條細線深度。
+            </p>
+          </div>
+          <div class="glass-card">
+            <div class="text-cyan-400 font-bold text-xs mb-1">第三代：扇形覆蓋</div>
+            <div class="text-white font-bold text-sm mb-2">多音束聲納 (Multibeam)</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              船底扇形排列發射數百道聲束，航行一次即可掃描成千上萬個水深點，繪製數公里寬的大面積 3D 彩色海底數值地形圖。
+            </p>
+          </div>
+          <div class="glass-card">
+            <div class="text-teal-400 font-bold text-xs mb-1">第四代：微細構造偵測</div>
+            <div class="text-white font-bold text-sm mb-2">側掃聲納 (Side-Scan)</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              拖曳於近海床水層發射水平扁平聲束，利用聲波陰影探測海底微小起伏、沉船遺骸與馬航黑盒子搜救定位。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTD & Flow Observation -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>2. 水文核心：CTD 溫鹽深儀與 ADCP 都卜勒測流</span>
+        </h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="glass-card">
+            <h4 class="font-bold text-cyan-300 text-base mb-2">🎛️ CTD 溫鹽深儀與多功能採水輪盤 (Rosette)</h4>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+              海洋調查船上最繁忙的設備，配備多種高精準感測探針：
+            </p>
+            <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside mb-3">
+              <li><strong>Conductivity (導電度探針)：</strong>利用海水電導度計算實用鹽度 (PSU)。</li>
+              <li><strong>Temperature (溫度探針)：</strong>採用超高靈敏白金電阻阻值隨溫度變化的特性測溫。</li>
+              <li><strong>Depth (水壓探針)：</strong>測量靜水壓力（每加深 10 公尺約增 1 大氣壓）換算精確深度。</li>
+              <li><strong>輔助探針：</strong>溶氧探針 (DO)、pH 探針、螢光探針（測葉綠素 a 激發螢光）、光穿透率探針。</li>
+              <li><strong>尼斯金採水瓶 (Niskin Bottles)：</strong>環繞主體安裝，遙控在特定深度觸發閉合採集純淨水樣。</li>
+            </ul>
+          </div>
+
+          <div class="glass-card">
+            <h4 class="font-bold text-teal-300 text-base mb-2">📡 ADCP 音響都卜勒流速剖面儀原理</h4>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+              徹底顛覆傳統單點螺旋槳機械式測流，一次取得全水深剖面流速：
+            </p>
+            <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside mb-3">
+              <li>向水中發射固定頻率的聲波脈衝。</li>
+              <li>水中懸浮微粒與浮游生物隨海流漂移，並將聲波反射回接收探針。</li>
+              <li><strong>都卜勒頻移原理：</strong>若水流朝探針迎面流來，回波頻率變高；若離探針遠去，回波頻率變低。藉由頻率差 $\Delta f$ 即可精算流速！</li>
+              <li>依據回波返回的時間差，可精確切分不同深度的「水體胞 (Range Bins)」，同步產出整層流速垂直剖面。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Satellite Oceanography & Submersibles -->
+      <div class="glass-panel p-6">
+        <h3 class="text-xl font-bold text-cyan-300 flex items-center gap-2 mb-4">
+          <span>3. 海洋衛星遙測三劍客與水下載具 (ROV vs AUV)</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="glass-card space-y-3">
+            <h4 class="font-bold text-amber-300 text-sm">🛰️ 海洋衛星遙測技術對比</h4>
+            <div class="text-xs text-slate-300 space-y-2">
+              <div class="p-2 rounded bg-slate-900 border border-slate-700">
+                <span class="text-cyan-300 font-bold">衛星測高儀 (Altimeter: TOPEX / Jason / SWOT)：</span>
+                測雷達回波時間得知海面微地形高度（SSH），依據海面坡度推算地轉流速，並根據大地水準面微小重力異常反推全大洋海底地形！
+              </div>
+              <div class="p-2 rounded bg-slate-900 border border-slate-700">
+                <span class="text-coralPink font-bold">海面水溫 (SST 遙測)：</span>
+                紅外線遙測（解析度高但受雲霧遮擋）與微波遙測（能穿透雲層但解析度較低）。
+              </div>
+              <div class="p-2 rounded bg-slate-900 border border-slate-700">
+                <span class="text-emerald-300 font-bold">海色衛星 (Ocean Color: MODIS / SeaWiFS)：</span>
+                測可見光多波段反射率，反演海表葉綠素 a 濃度、懸浮沉積物與監控劇毒「藻華 (Algal Bloom)」。
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card space-y-3">
+            <h4 class="font-bold text-cyan-300 text-sm">🤖 深海無人水下載具對決：ROV vs AUV</h4>
+            <div class="text-xs text-slate-300 space-y-2">
+              <div class="p-2 rounded bg-slate-900 border border-slate-700">
+                <span class="text-teal-300 font-bold">ROV (遠端遙控載具)：</span>
+                由母船透過承載光纖與高壓電力的「臍帶纜線」連接，操作員在船艙搖桿即時操控機械手臂抓取深海珊瑚岩心。例如台灣大學工程科學及海洋工程系「海影一號」。
+              </div>
+              <div class="p-2 rounded bg-slate-900 border border-slate-700">
+                <span class="text-sky-300 font-bold">AUV (自主式水下載具)：</span>
+                無纜線拘束，自帶大容量電池與導航電腦，下水後按預設航線自主巡航掃描海床，完畢後自動浮出海面回傳資料。例如台大「海敏一號」。
+              </div>
+            </div>
+            <div class="p-2 rounded bg-cyan-950/40 border border-cyan-500/20 text-[11px] text-cyan-200">
+              💡 <strong>Argo 自流浮標計畫：</strong>全球大洋投放超過 4000 顆自主浮標，每 10 天由 2000 公尺深海緩慢上浮，一邊測量溫鹽剖面一邊浮出海面以衛星回傳數據，再吸水下沉循環。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB: SIMULATIONS LAB (6合1 互動實驗室) -->
+    <!-- ================================================================= -->
+    <section id="tab-simulations" class="tab-content-panel hidden space-y-6">
+      <div class="flex items-center justify-between border-b border-cyan-500/20 pb-4">
+        <div>
+          <span class="badge badge-amber">Interactive Physics Sandbox</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">六合一互動海洋物理實驗室</h2>
+          <p class="text-slate-400 text-sm">親自動手調整參數，實時觀察流體力學與海洋波動動態渲染</p>
+        </div>
+      </div>
+
+      <!-- Lab Selector Tabs -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-800">
+        <button data-lab-target="ts-diagram" class="px-3.5 py-2 rounded-xl text-xs font-bold border transition-all bg-cyan-500/20 border-cyan-400 text-cyan-300 flex items-center gap-1.5">
+          <span>📈</span> 1. 溫鹽圖與增密
+        </button>
+        <button data-lab-target="ion-calc" class="px-3.5 py-2 rounded-xl text-xs font-bold border transition-all bg-slate-800/60 border-slate-700 text-slate-400 hover:text-white flex items-center gap-1.5">
+          <span>🧪</span> 2. 離子與鹽度計算
+        </button>
+        <button data-lab-target="wave-orbits" class="px-3.5 py-2 rounded-xl text-xs font-bold border transition-all bg-slate-800/60 border-slate-700 text-slate-400 hover:text-white flex items-center gap-1.5">
+          <span>🌊</span> 3. 深淺水波質點軌道
+        </button>
+        <button data-lab-target="sofar" class="px-3.5 py-2 rounded-xl text-xs font-bold border transition-all bg-slate-800/60 border-slate-700 text-slate-400 hover:text-white flex items-center gap-1.5">
+          <span>🔊</span> 4. SOFAR 聲道折射
+        </button>
+        <button data-lab-target="tides" class="px-3.5 py-2 rounded-xl text-xs font-bold border transition-all bg-slate-800/60 border-slate-700 text-slate-400 hover:text-white flex items-center gap-1.5">
+          <span>🌓</span> 5. 日月引潮力天體幾何
+        </button>
+        <button data-lab-target="ekman" class="px-3.5 py-2 rounded-xl text-xs font-bold border transition-all bg-slate-800/60 border-slate-700 text-slate-400 hover:text-white flex items-center gap-1.5">
+          <span>🌀</span> 6. 埃克曼湧升流沙盒
+        </button>
+      </div>
+
+      <!-- LAB 1: TS DIAGRAM -->
+      <div id="lab-ts-diagram" class="lab-content-panel space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Canvas -->
+          <div class="lg:col-span-2 glass-panel p-4 flex flex-col">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs text-cyan-300 font-bold uppercase tracking-wider">T-S Diagram with Dynamic Isopycnals (σt)</span>
+              <div class="flex items-center gap-2">
+                <button data-ts-preset="equal-density" class="text-xs px-2.5 py-1 rounded bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-900/60">
+                  載入等密度水團 A & B
+                </button>
+                <button data-ts-preset="polar" class="text-xs px-2.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700">
+                  極地冷鹽水團
+                </button>
+              </div>
+            </div>
+            <div class="canvas-wrapper flex-1 min-h-[380px] sm:min-h-[460px]">
+              <canvas id="tsCanvas"></canvas>
+            </div>
+          </div>
+
+          <!-- Controls & Readouts -->
+          <div class="glass-panel p-6 flex flex-col justify-between space-y-4">
+            <div>
+              <h3 class="text-base font-bold text-white mb-3">水團溫鹽參數控制</h3>
+              
+              <!-- Water Mass A -->
+              <div class="p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30 mb-3 space-y-2">
+                <div class="flex items-center justify-between text-xs font-bold text-cyan-300">
+                  <span>水塊 A (冷/淡)</span>
+                  <span id="res-sigA" class="font-mono text-cyan-200">--</span>
+                </div>
+                <div>
+                  <div class="flex justify-between text-[11px] text-slate-400">
+                    <span>溫度 T_A</span>
+                    <span id="val-ta" class="font-mono">0.5 °C</span>
+                  </div>
+                  <input type="range" id="ts-ta" min="0" max="20" step="0.1" value="0.5">
+                </div>
+                <div>
+                  <div class="flex justify-between text-[11px] text-slate-400">
+                    <span>鹽度 S_A</span>
+                    <span id="val-sa" class="font-mono">34.25 ‰</span>
+                  </div>
+                  <input type="range" id="ts-sa" min="33" max="37" step="0.05" value="34.25">
+                </div>
+              </div>
+
+              <!-- Water Mass B -->
+              <div class="p-3.5 rounded-xl bg-rose-950/30 border border-rose-500/30 mb-3 space-y-2">
+                <div class="flex items-center justify-between text-xs font-bold text-rose-300">
+                  <span>水塊 B (暖/鹹)</span>
+                  <span id="res-sigB" class="font-mono text-rose-200">--</span>
+                </div>
+                <div>
+                  <div class="flex justify-between text-[11px] text-slate-400">
+                    <span>溫度 T_B</span>
+                    <span id="val-tb" class="font-mono">10.0 °C</span>
+                  </div>
+                  <input type="range" id="ts-tb" min="0" max="20" step="0.1" value="10.0">
+                </div>
+                <div>
+                  <div class="flex justify-between text-[11px] text-slate-400">
+                    <span>鹽度 S_B</span>
+                    <span id="val-sb" class="font-mono">35.65 ‰</span>
+                  </div>
+                  <input type="range" id="ts-sb" min="33" max="37" step="0.05" value="35.65">
+                </div>
+              </div>
+
+              <!-- Mixture Result -->
+              <div class="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/30 space-y-2">
+                <div class="flex items-center justify-between text-xs font-bold text-emerald-300">
+                  <span>50:50 混合水體 C</span>
+                  <span id="res-sigMix" class="font-mono text-emerald-200">--</span>
+                </div>
+                <div class="flex items-center justify-between text-xs text-slate-300">
+                  <span>增密差值 (Δσt)</span>
+                  <span id="res-deltaSig" class="font-mono font-bold text-emerald-300">--</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cabbeling Note Box -->
+            <div id="cabbeling-status" class="p-3 rounded-lg bg-slate-800 text-xs text-slate-300">
+              計算中...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 2: ION CALCULATOR -->
+      <div id="lab-ion-calc" class="lab-content-panel hidden space-y-6">
+        <div class="glass-panel p-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+            <div>
+              <h3 class="text-lg font-bold text-white">海水分離子濃度計算機 (依據 Grasshoff 1999 基準)</h3>
+              <p class="text-xs text-slate-400">輸入鹽度 S 或氯度 Cl，自動依據常數比例定律計算各主要離子含量</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button data-ion-preset="standard-35" class="text-xs px-2.5 py-1.5 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-300">
+                標準海水 (S = 35)
+              </button>
+              <button data-ion-preset="red-sea-40" class="text-xs px-2.5 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300">
+                紅海高鹽 (S = 40)
+              </button>
+              <button data-ion-preset="baltic-10" class="text-xs px-2.5 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300">
+                波羅的海低鹽 (S = 10)
+              </button>
+              <button data-ion-preset="scenario-30" class="text-xs px-2.5 py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-300">
+                講義情境二 (S = 30)
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="glass-card">
+              <label class="block text-xs font-bold text-cyan-300 uppercase mb-1">海水總鹽度 Salinity (S, ‰ / PSU)</label>
+              <input type="number" id="calc-salinity" step="0.1" value="35.0" class="w-full bg-slate-950 border border-cyan-500/30 rounded-lg px-3 py-2 text-cyan-300 font-mono text-base focus:outline-none focus:border-cyan-400">
+            </div>
+            <div class="glass-card">
+              <label class="block text-xs font-bold text-teal-300 uppercase mb-1">氯度 Chlorinity (Cl, g/kg) [Knudsen 公式]</label>
+              <input type="number" id="calc-chlorinity" step="0.0001" value="19.3530" class="w-full bg-slate-950 border border-teal-500/30 rounded-lg px-3 py-2 text-teal-300 font-mono text-base focus:outline-none focus:border-teal-400">
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="ocean-table">
+              <thead>
+                <tr>
+                  <th>離子種類</th>
+                  <th>質量濃度 (g/kg)</th>
+                  <th>莫耳濃度 (mol/kg)</th>
+                  <th>與氯度固定比值 (g/Cl)</th>
+                  <th>莫耳比值 (mol/Cl)</th>
+                </tr>
+              </thead>
+              <tbody id="ion-table-body">
+                <!-- Injected by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 3: WAVE SIMULATOR -->
+      <div id="lab-wave-orbits" class="lab-content-panel hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 glass-panel p-4 flex flex-col">
+            <div class="flex items-center justify-between mb-2">
+              <span id="wave-type-badge" class="badge badge-cyan">深水波 (Deep Water Wave)</span>
+              <div id="wave-breaking-alert" class="hidden text-xs px-2.5 py-0.5 rounded bg-rose-500/20 border border-rose-500 text-rose-300 font-bold animate-pulse">
+                💥 陡度超過 1/7 臨界碎波！
+              </div>
+            </div>
+            <div class="canvas-wrapper flex-1 min-h-[380px] sm:min-h-[460px]">
+              <canvas id="waveCanvas"></canvas>
+            </div>
+          </div>
+
+          <div class="glass-panel p-6 flex flex-col justify-between space-y-4">
+            <div>
+              <h3 class="text-base font-bold text-white mb-3">波動物理參數調節</h3>
+
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between text-xs text-slate-300 mb-1">
+                    <span>水深 h (Depth)</span>
+                    <span id="val-wave-depth" class="font-mono text-cyan-300">50 m</span>
+                  </div>
+                  <input type="range" id="wave-depth" min="2" max="150" step="1" value="50">
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs text-slate-300 mb-1">
+                    <span>波長 L (Wavelength)</span>
+                    <span id="val-wave-length" class="font-mono text-amber-300">60 m</span>
+                  </div>
+                  <input type="range" id="wave-length" min="10" max="200" step="2" value="60">
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs text-slate-300 mb-1">
+                    <span>波高 H (Wave Height)</span>
+                    <span id="val-wave-height" class="font-mono text-rose-300">3 m</span>
+                  </div>
+                  <input type="range" id="wave-height" min="0.5" max="15" step="0.5" value="3">
+                </div>
+              </div>
+
+              <!-- Computed Readout -->
+              <div class="mt-6 p-3.5 rounded-xl bg-slate-900/80 border border-slate-700 space-y-2 text-xs">
+                <div class="flex justify-between">
+                  <span class="text-slate-400">傳播波速 (C)：</span>
+                  <span id="val-wave-speed" class="font-mono font-bold text-cyan-300">--</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">週期 (T)：</span>
+                  <span id="val-wave-period" class="font-mono text-slate-200">--</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">波陡度 (H/L)：</span>
+                  <span id="val-wave-steepness" class="font-mono text-slate-200">--</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-[11px] text-slate-400 leading-relaxed p-3 rounded-lg bg-slate-900 border border-slate-800">
+              💡 觀察水面與水深處的光點粒子軌道：在深水波（$h > L/2$）中為<strong>正圓形</strong>並向下遞減；若將水深調淺使 $h < L/20$（淺水波），圓形將被擠壓成<strong>水平橢圓</strong>，海底質點呈現<strong>純水平平移震盪</strong>！
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 4: SOFAR ACOUSTIC TRACER -->
+      <div id="lab-sofar" class="lab-content-panel hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 glass-panel p-4 flex flex-col">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs text-cyan-300 font-bold uppercase tracking-wider">SOFAR Channel Snell Ray Tracer</span>
+              <div class="flex items-center gap-2">
+                <button data-sofar-preset="channel-axis" class="text-xs px-2.5 py-1 rounded bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-900/60">
+                  聲源置於軸心 (1000m)
+                </button>
+                <button data-sofar-preset="surface-shadow" class="text-xs px-2.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700">
+                  表層聲學陰影區 (50m)
+                </button>
+              </div>
+            </div>
+            <div class="canvas-wrapper flex-1 min-h-[380px] sm:min-h-[460px]">
+              <canvas id="sofarCanvas"></canvas>
+            </div>
+          </div>
+
+          <div class="glass-panel p-6 flex flex-col justify-between space-y-4">
+            <div>
+              <h3 class="text-base font-bold text-white mb-3">深海低頻聲學通道控制</h3>
+
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between text-xs text-slate-300 mb-1">
+                    <span>聲源深度 Source Depth</span>
+                    <span id="val-sofar-depth" class="font-mono text-cyan-300">1000 m</span>
+                  </div>
+                  <input type="range" id="sofar-src-depth" min="10" max="3000" step="50" value="1000">
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs text-slate-300 mb-1">
+                    <span>射線發射角度角幅</span>
+                    <span id="val-sofar-angle" class="font-mono text-amber-300">±10°</span>
+                  </div>
+                  <input type="range" id="sofar-angle" min="2" max="25" step="1" value="10">
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs text-slate-300 mb-1">
+                    <span>聲線束數量</span>
+                    <span id="val-sofar-rays" class="font-mono text-slate-200">11 條</span>
+                  </div>
+                  <input type="range" id="sofar-rays" min="3" max="25" step="2" value="11">
+                </div>
+              </div>
+
+              <div class="mt-6 p-3.5 rounded-xl bg-slate-900/80 border border-slate-700 text-xs space-y-2">
+                <div class="font-bold text-cyan-300">司乃爾折射定律原理：</div>
+                <div class="math-box text-cyan-300 text-xs">
+                  C(z) / \cos\theta(z) = \text{常數}
+                </div>
+                <p class="text-slate-400">
+                  聲波總是被彎向<strong>「聲速較低」</strong>的一側。在 1000 公尺聲速極小軸心，聲波上下反覆折射聚焦，幾乎不觸及水面與海底，因而能傳播數千公里！
+                </p>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-lg bg-amber-950/30 border border-amber-500/30 text-[11px] text-amber-200">
+              💡 <strong>潛艇避敵技巧：</strong>將聲源深度拉至表層（50m），會發現射線全部向下彎折，在表層斜下方形成一大塊<strong>「聲學陰影區 (Shadow Zone)」</strong>，敵艦聲納根本探測不到該區域內的潛艇！
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 5: TIDE SIMULATOR -->
+      <div id="lab-tides" class="lab-content-panel hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 glass-panel p-4 flex flex-col">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs text-cyan-300 font-bold uppercase tracking-wider">Earth-Moon-Sun Tidal Bulge Simulator</span>
+              <div class="flex items-center gap-2">
+                <button data-moon-phase="new-moon" class="text-xs px-2 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:text-white">新月 (大潮)</button>
+                <button data-moon-phase="first-quarter" class="text-xs px-2 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:text-white">上弦 (小潮)</button>
+                <button data-moon-phase="full-moon" class="text-xs px-2 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:text-white">滿月 (大潮)</button>
+                <button data-moon-phase="third-quarter" class="text-xs px-2 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:text-white">下弦 (小潮)</button>
+              </div>
+            </div>
+            <div class="canvas-wrapper flex-1 min-h-[380px] sm:min-h-[460px]">
+              <canvas id="tideCanvas"></canvas>
+            </div>
+          </div>
+
+          <div class="glass-panel p-6 flex flex-col justify-between space-y-4">
+            <div>
+              <h3 class="text-base font-bold text-white mb-3">日月天體引潮力模擬</h3>
+
+              <div>
+                <div class="flex justify-between text-xs text-slate-300 mb-1">
+                  <span>月球繞地公轉角度</span>
+                  <span id="val-moon-angle" class="font-mono text-cyan-300">0°</span>
+                </div>
+                <input type="range" id="moon-angle" min="0" max="360" step="2" value="0">
+              </div>
+
+              <!-- Realtime Status -->
+              <div class="mt-6 p-4 rounded-xl bg-slate-900 border border-slate-700 space-y-2">
+                <div class="text-xs text-slate-400">當前潮汐狀態：</div>
+                <div id="tide-type-display" class="text-sm font-bold text-rose-400">大潮 (Spring Tide)</div>
+                <div class="text-xs text-slate-300 flex justify-between pt-1 border-t border-slate-800">
+                  <span>預期潮差特性：</span>
+                  <span id="tide-range-display" class="font-mono text-cyan-300 font-semibold">潮差最大</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-xs text-slate-400 space-y-2 p-3 rounded-lg bg-slate-900 border border-slate-800">
+              <p>
+                <strong>引潮力公式：</strong>$F_{tidal} \propto \frac{M}{R^3}$。
+              </p>
+              <p>
+                青色波包展示的是地球表面受到<strong>月球引潮力與太陽引潮力合成</strong>的海水潮隆變形。當新月或滿月時，日月潮隆方向平行，引潮力相加形成<strong>大潮 (Spring Tide)</strong>！
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 6: EKMAN & UPWELLING SIMULATOR -->
+      <div id="lab-ekman" class="lab-content-panel hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 glass-panel p-4 flex flex-col">
+            <div class="flex items-center justify-between mb-2">
+              <span id="ekman-outcome-badge" class="badge badge-cyan">強烈湧升流 (Coastal Upwelling)</span>
+              <span class="text-xs text-slate-400">動態粒子剖面</span>
+            </div>
+            <div class="canvas-wrapper flex-1 min-h-[380px] sm:min-h-[460px]">
+              <canvas id="ekmanCanvas"></canvas>
+            </div>
+          </div>
+
+          <div class="glass-panel p-6 flex flex-col justify-between space-y-4">
+            <div>
+              <h3 class="text-base font-bold text-white mb-3">風場與海岸幾何設定</h3>
+
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-xs font-bold text-slate-400 mb-1">半球選擇 Hemisphere</label>
+                  <select id="ekman-hemisphere" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-cyan-300 focus:outline-none">
+                    <option value="north" selected>北半球 (科氏偏向力向右 90°)</option>
+                    <option value="south">南半球 (科氏偏向力向左 90°)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-400 mb-1">盛行風風向 Wind Direction</label>
+                  <select id="ekman-wind" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-amber-300 focus:outline-none">
+                    <option value="southward" selected>吹向南方 (Northerly Wind)</option>
+                    <option value="northward">吹向北方 (Southerly Wind)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-400 mb-1">海岸位置 Coast Orientation</label>
+                  <select id="ekman-coast" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-teal-300 focus:outline-none">
+                    <option value="west" selected>西海岸（如北美加州、秘魯，陸地在東）</option>
+                    <option value="east">東海岸（如台灣東岸、美國東岸，陸地在西）</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Explanation Result -->
+              <div class="mt-5 p-3.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-slate-300">
+                <div class="font-bold text-cyan-300 mb-1">動力學判定：</div>
+                <div id="ekman-explain-text" class="leading-relaxed">
+                  --
+                </div>
+              </div>
+            </div>
+
+            <div class="text-[11px] text-slate-400 p-3 rounded-lg bg-slate-900 border border-slate-800">
+              💡 試試切換為<strong>「南半球 + 吹向北方的南風 + 西海岸」</strong>，即可模擬秘魯涼流與世界最大鯷魚湧升漁場！
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB: QUIZ (闖關測驗與挑戰) -->
+    <!-- ================================================================= -->
+    <section id="tab-quiz" class="tab-content-panel hidden space-y-6">
+      <div class="flex items-center justify-between border-b border-cyan-500/20 pb-4">
+        <div>
+          <span class="badge badge-amber">Interactive Knowledge Assessment</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">海洋學知識綜合評量闖關</h2>
+          <p class="text-slate-400 text-sm">涵蓋講義五大主題重點考點，即時解答、概念剖析與成績頒發</p>
+        </div>
+        <div id="quiz-answered-count" class="text-xs font-mono text-cyan-300 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700">
+          已作答：0 / 15
+        </div>
+      </div>
+
+      <!-- Quick Nav Numbers -->
+      <div class="glass-panel p-4 flex flex-wrap items-center gap-2 justify-center" id="quiz-nav-pills">
+        <!-- Rendered by quiz.js -->
+      </div>
+
+      <!-- Question Card Container -->
+      <div class="glass-panel p-6 sm:p-8 max-w-3xl mx-auto" id="quiz-card-content">
+        <!-- Injected by quiz.js -->
+      </div>
+
+      <!-- Action Footer Buttons -->
+      <div class="max-w-3xl mx-auto flex items-center justify-between gap-4">
+        <button id="quiz-btn-prev" class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-bold text-slate-300 hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed">
+          ← 上一題
+        </button>
+        <div class="flex items-center gap-3">
+          <button id="quiz-btn-reset" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-400 hover:text-white">
+            重新作答
+          </button>
+          <button id="quiz-btn-submit" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-extrabold text-xs shadow-lg shadow-cyan-500/20 hover:scale-105 transition-all">
+            繳卷並查看成績
+          </button>
+        </div>
+        <button id="quiz-btn-next" class="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs font-bold text-slate-300 hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed">
+          下一題 →
+        </button>
+      </div>
+
+      <!-- Score Result Modal (Hidden by default) -->
+      <div id="quiz-result-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="glass-panel max-w-md w-full p-8 text-center border-cyan-400/40 relative animate-scaleUp">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 mx-auto flex items-center justify-center text-3xl shadow-lg shadow-cyan-500/40 mb-4">
+            🏆
+          </div>
+          <h3 id="quiz-result-title" class="text-xl font-bold text-white mb-2">優異！深海探索學者</h3>
+          <div id="quiz-result-score" class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-teal-300 font-mono my-3">
+            93%
+          </div>
+          <p id="quiz-result-message" class="text-sm text-slate-300 leading-relaxed mb-6">
+            恭喜完成海洋學綜合評量！所有題目均附有詳解，歡迎逐題點閱複習！
+          </p>
+          <button id="quiz-close-modal" class="w-full py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold text-sm hover:bg-cyan-400 transition-colors">
+            檢視題目詳解與考點
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- TAB: GLOSSARY (海洋學專有名詞小辭典) -->
+    <!-- ================================================================= -->
+    <section id="tab-glossary" class="tab-content-panel hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-cyan-500/20 pb-4">
+        <div>
+          <span class="badge badge-cyan">Oceanographic Encyclopedia</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">海洋學核心專有名詞辭典</h2>
+          <p class="text-slate-400 text-sm">中英雙語對照速查、核心公式與講義關鍵考點彙整</p>
+        </div>
+        <div class="w-full sm:w-72">
+          <input type="text" id="glossary-search-input" placeholder="🔍 搜尋名詞（如 SOFAR, 黑潮, PSU）..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="glossary-grid">
+        
+        <div class="glass-card glossary-card">
+          <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-1">
+            <span>Salinity & PSU</span>
+            <span>主題一</span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">實用鹽標度 (Practical Salinity Unit)</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            現代海洋學不再使用乾燥重量法，而是測量海水的「電導度」對照標準氯化鉀溶液換算得出，單位為 PSU 或 ‰。Knudsen 經驗公式為 $S = 1.80655 \times Cl$。
+          </p>
+        </div>
+
+        <div class="glass-card glossary-card">
+          <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-1">
+            <span>Marcet's Principle</span>
+            <span>主題一</span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">恆定組成定律 (常數比例定律)</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            全球海洋主要鹽分離子（Cl⁻, Na⁺, SO₄²⁻, Mg²⁺, Ca²⁺, K⁺）的相對比例在各海域始終保持固定。大洋混合時間約 1000 年，而離子滯留時間達數百萬年，故混合極其均勻。
+          </p>
+        </div>
+
+        <div class="glass-card glossary-card">
+          <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-1">
+            <span>Brine Rejection</span>
+            <span>主題一</span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">結冰排鹵 (鹽析現象)</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            海水結冰時水分子形成純水冰晶，大部分鹽分被排出進入周圍海水中，形成極度冰冷且高鹽的高密度海水，下沉形成大西洋深層水與南極底層水，亦引發「死亡冰柱 (Brinicle)」。
+          </p>
+        </div>
+
+        <div class="glass-card glossary-card">
+          <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-1">
+            <span>Cabbeling</span>
+            <span>主題一</span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">混和增密現象</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            因海水狀態方程式之非線性（等密度線彎曲），兩種密度相同但溫鹽不同的水塊混合後，產生的新水體密度會大於原來兩種水塊，導致混合水體下沉。
+          </p>
+        </div>
+
+        <div class="glass-card glossary-card">
+          <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-1">
+            <span>SOFAR Channel</span>
+            <span>主題一</span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">深海低頻聲學通道</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            位於約 800~1000m 處的聲速極小值層。司乃爾折射定律使得聲波持續被彎回軸心，形成自聚焦全反射波導管，低頻聲波可傳播數千公里，用於搜救、軍事監聽與鯨魚通訊。
+          </p>
+        </div>
+
+        <div class="glass-card glossary-card">
+          <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-1">
+            <span>Ekman Transport</span>
+            <span>主題二</span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">埃克曼傳輸 (淨位移)</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            風應力作用於海面，在科氏偏向力與水層摩擦力平衡下，表層海流偏向風向 45°，整層海水質量淨輸送（Ekman Transport）則恰好偏向風向右側 90°（北半球）或左側 90°（南半球）。
+          </p>
+        </div>
+
+        <div class="glass-card glossary-card">
+          <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-1">
+            <span>Coastal Upwelling</span>
+            <span>主題二</span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">沿岸湧升流</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            盛行風驅動表層海水發生離岸埃克曼傳輸，底層冰冷且富含硝酸鹽、磷酸鹽的深層水被迫向上補充，帶動浮游植物大量繁衍，形成世界級高產量漁場（如加州、秘魯）。
+          </p>
+        </div>
+
+        <div class="glass-card glossary-card">
+          <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-1">
+            <span>Western Intensification</span>
+            <span>主題二</span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">西方邊界強化 (斯托梅爾模型)</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            因地球科氏參數隨緯度增加（β 效應），大洋風應力注入的順時針渦度矩，唯有在大洋西岸北上的強狹海流（黑潮、灣流）受陸棚左側摩擦才能產生逆時針力矩達到穩態煞車平衡。
+          </p>
+        </div>
+
+        <div class="glass-card glossary-card">
+          <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-1">
+            <span>Shallow Water Wave</span>
+            <span>主題三</span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">淺水波 (h < L/20)</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            水深小於波長 1/20 的波浪。波速由水深決定：$C = \sqrt{gh}$。海嘯在大洋中波長達數百公里，因而亦屬淺水波。
+          </p>
+        </div>
+
+        <div class="glass-card glossary-card">
+          <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-1">
+            <span>Tidal Force</span>
+            <span>主題三</span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">引潮力 (與距離立方成反比)</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            天體萬有引力與繞質心公轉慣性離心力的向量差值。大小為 $F \propto M / R^3$。月球雖質量小但距離近，引潮力約為太陽的 2.17 倍。
+          </p>
+        </div>
+
+        <div class="glass-card glossary-card">
+          <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-1">
+            <span>CTD Profiler</span>
+            <span>主題五</span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">溫鹽深儀 (Conductivity-Temp-Depth)</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            現代海洋調查標配儀器。藉由白金電阻測溫、電導度測鹽、壓力計壓測深，常外掛採水輪盤 (Rosette)、溶氧與葉綠素螢光探針。
+          </p>
+        </div>
+
+        <div class="glass-card glossary-card">
+          <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-1">
+            <span>ADCP</span>
+            <span>主題五</span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">音響都卜勒流速剖面儀</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            利用水中浮游微粒反射聲波所產生的都卜勒頻移原理，可同時且連續測量數百公尺全水深斷面之三維海流流速與流向。
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="bg-[#020712] border-t border-cyan-500/20 py-8 px-4 text-center text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full bg-cyan-400 animate-ping"></span>
+        <span class="font-bold text-slate-300">藍海奧秘：現代互動海洋學探索與教學平台</span>
+      </div>
+      <div>
+        基於講義《海洋主題.pdf》完整教案研發 · 適用於高中地球科學與大學海洋學教學展示
+      </div>
+      <div class="text-slate-400">
+        純前端原生實作 · 支援離線瀏覽與多螢幕投影
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/simulations.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

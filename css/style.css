@@ -1,0 +1,369 @@
+/* OceanLearn - Modern Deep Sea Learning Platform Stylesheet */
+:root {
+  --bg-deep: #030a16;
+  --bg-surface: #0a192f;
+  --bg-card: rgba(13, 31, 56, 0.75);
+  --bg-card-hover: rgba(18, 44, 79, 0.85);
+  --border-subtle: rgba(100, 255, 218, 0.15);
+  --border-glow: rgba(100, 255, 218, 0.45);
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-highlight: #64ffda;
+  --accent-cyan: #00f2fe;
+  --accent-blue: #0984e3;
+  --accent-coral: #ff7675;
+  --accent-amber: #feca57;
+  --accent-purple: #a29bfe;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: radial-gradient(circle at 50% 0%, #0d213f 0%, var(--bg-deep) 75%);
+  color: var(--text-main);
+  min-height: 100vh;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.25s ease;
+}
+
+.glass-panel:hover {
+  border-color: var(--border-glow);
+  box-shadow: 0 12px 40px 0 rgba(0, 242, 254, 0.1);
+}
+
+.glass-card {
+  background: rgba(15, 34, 61, 0.65);
+  border: 1px solid rgba(100, 255, 218, 0.12);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(100, 255, 218, 0.3);
+}
+
+/* Navigation Tabs */
+.nav-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.15rem;
+  font-size: 0.925rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.nav-tab-btn:hover {
+  color: #fff;
+  background: rgba(0, 242, 254, 0.12);
+  border-color: rgba(0, 242, 254, 0.3);
+}
+
+.nav-tab-btn.active {
+  color: #030a16;
+  font-weight: 600;
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  border-color: #00f2fe;
+  box-shadow: 0 0 16px rgba(0, 242, 254, 0.45);
+}
+
+/* Ocean Wave Header Animation */
+.ocean-hero {
+  position: relative;
+  background: linear-gradient(180deg, rgba(6, 26, 55, 0.9) 0%, rgba(3, 10, 22, 0.98) 100%);
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.wave-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 50px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='rgba(0,242,254,0.06)'%3E%3C/path%3E%3C/svg%3E") repeat-x;
+  animation: waveMotion 18s linear infinite;
+  opacity: 0.7;
+}
+
+.wave-layer.w2 {
+  bottom: -5px;
+  animation: waveMotion 12s linear infinite reverse;
+  opacity: 0.4;
+  height: 65px;
+}
+
+@keyframes waveMotion {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Badge & Tag Styling */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-cyan {
+  background: rgba(0, 242, 254, 0.15);
+  color: #00f2fe;
+  border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+.badge-coral {
+  background: rgba(255, 118, 117, 0.15);
+  color: #ff7675;
+  border: 1px solid rgba(255, 118, 117, 0.3);
+}
+
+.badge-amber {
+  background: rgba(254, 202, 87, 0.15);
+  color: #feca57;
+  border: 1px solid rgba(254, 202, 87, 0.3);
+}
+
+.badge-blue {
+  background: rgba(9, 132, 227, 0.15);
+  color: #74b9ff;
+  border: 1px solid rgba(9, 132, 227, 0.3);
+}
+
+/* Custom Interactive Sliders */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  outline: none;
+  transition: background 0.2s;
+}
+
+input[type="range"]:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #00f2fe;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.7);
+  cursor: pointer;
+  border: 2px solid #030a16;
+  transition: transform 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Canvas Container */
+.canvas-wrapper {
+  position: relative;
+  background: #020712;
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.7);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Callout Box (Note / Importance / Concept) */
+.callout {
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  border-left: 4px solid var(--accent-cyan);
+  background: rgba(0, 242, 254, 0.06);
+  margin: 1rem 0;
+}
+
+.callout-coral {
+  border-left-color: var(--accent-coral);
+  background: rgba(255, 118, 117, 0.08);
+}
+
+.callout-amber {
+  border-left-color: var(--accent-amber);
+  background: rgba(254, 202, 87, 0.08);
+}
+
+.callout-purple {
+  border-left-color: var(--accent-purple);
+  background: rgba(162, 155, 254, 0.08);
+}
+
+/* Mathematical Equation Box */
+.math-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-mono);
+  color: #64ffda;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  margin: 0.75rem 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Table Design */
+.ocean-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(10, 25, 47, 0.5);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.88rem;
+}
+
+.ocean-table th {
+  background: rgba(13, 37, 69, 0.85);
+  color: #64ffda;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.ocean-table td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+}
+
+.ocean-table tr:hover td {
+  background: rgba(0, 242, 254, 0.04);
+  color: #fff;
+}
+
+.ocean-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Quiz Option Card */
+.quiz-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.9rem 1.15rem;
+  background: rgba(18, 44, 79, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.quiz-option:hover {
+  background: rgba(0, 242, 254, 0.1);
+  border-color: rgba(0, 242, 254, 0.4);
+  transform: translateX(4px);
+}
+
+.quiz-option.selected {
+  background: rgba(0, 242, 254, 0.2);
+  border-color: #00f2fe;
+  color: #fff;
+}
+
+.quiz-option.correct {
+  background: rgba(46, 204, 113, 0.25) !important;
+  border-color: #2ecc71 !important;
+  color: #fff !important;
+}
+
+.quiz-option.wrong {
+  background: rgba(231, 76, 60, 0.25) !important;
+  border-color: #e74c3c !important;
+  color: #fff !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 255, 218, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 255, 218, 0.4);
+}
+
+/* Animations */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(0, 242, 254, 0.7); }
+}
+
+.pulse-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+/* Print / Presentation mode */
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .glass-panel {
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #000;
+    box-shadow: none;
+  }
+}
